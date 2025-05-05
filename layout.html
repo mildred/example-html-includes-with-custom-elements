@@ -1,0 +1,50 @@
+<!doctype html>
+<head>
+    <link rel="stylesheet" type="text/css" href="fonts.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="layout.css"/>
+
+    <header>
+      <a href="./">
+        <div class="title">
+          <h1>Title</h1>
+          <h2>Subtitle</h2>
+        </div>
+      </a>
+      <nav>
+        <ul class="main">
+          <li class="">
+            <a href="./">Home</a>
+          </li>
+          <li class="">
+            <a href="./news/index.html">News</a>
+          </li>
+          <li class="">
+            <a href="./librairie/index.html">Library</a>
+          </li>
+          <li class="">
+            <a href="./contact.html">Contact</a>
+          </li>
+        </ul>
+        <script>
+          console.log((document.currentScript ?? window.currentScript).previousElementSibling)
+          for(let a of (document.currentScript ?? window.currentScript).previousElementSibling.querySelectorAll('a[href]')) {
+            a.parentElement.classList.toggle('current', document.location.href == a.href)
+          }
+        </script>
+      </nav>
+    </header>
+    <main>
+      <div>
+        <slot></slot>
+      </div>
+    </main>
+    <footer>
+      <p>Footer info</p>
+      <nav>
+        <a href="./contact.html">contact</a>
+      </nav>
+    </footer>
+</body>

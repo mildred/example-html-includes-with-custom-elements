@@ -1,0 +1,152 @@
+html {
+  --site-width: 50rem;
+  --font-size-small: 0.8rem;
+  --banner-width: 1178px;
+  --header-font-family: "Monotype Corsiva";
+
+  font-family: "Libre Baskerville";
+}
+
+body {
+    background-color: #eee;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--header-font-family);
+  color: #707fc0;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  text-decoration: none;
+  color: unset;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.8rem; }
+h4 { font-size: 1.6rem; }
+h5 { font-size: 1.4rem; }
+h6 { font-size: 1.2rem; }
+
+article.related > header > h1 { font-size: 1.8rem; }
+
+article h2:not(:first-child), article h3:not(:first-child), article h4:not(:first-child), article h5:not(:first-child), article h6:not(:first-child) {
+  text-align: center;
+}
+
+blockquote {
+  font-style: italic;
+  position: relative;
+  margin: 1em 2em;
+  padding: 0 2em;
+}
+
+cite {
+  font-style: italic;
+  padding: 0 6em 0 2em;
+  display: block;
+  text-align: right;
+  color: #888;
+}
+
+blockquote:before {
+  content: "«";
+  line-height: 0.2em;
+  font-size: 5em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #eee;
+}
+
+blockquote:after {
+  content: "»";
+  line-height: 0.2em;
+  font-size: 5em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #eee;
+}
+
+blockquote em {
+  font-style: normal;
+}
+
+hr {
+  border-color: transparent;
+  color: unset;
+  height: unset;
+}
+
+hr:before {
+  display: block;
+  font-size: 3rem;
+  content: "☙❧";
+  text-align: center;
+  color: #94d9c4;
+}
+
+a:visited {
+  color: #707fc0;
+}
+
+a {
+  color: #707fc0;
+}
+
+a.email-link[data-local-part][data-domain]:before {
+  content: attr(data-local-part) "\0040" attr(data-domain);
+}
+
+/*
+ * Body
+ */
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+header a, footer a, header a:visited, footer a:visited {
+  color: inherit;
+}
+
+header a, header a:visited {
+  text-decoration: none;
+}
+
+footer a {
+  text-decoration: underline;
+}
+
+/*
+ * body
+ */
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  background-color: #f8f8f8;
+}
+
+/*
+ *
+ */
+
+img.right {
+  float: right;
+  padding: 0.25rem;
+}
+
+/*
+ * relatd articles
+ */
+
+article.related {
+  display: flow-root;
+  margin: 1rem;
+  padding: 1rem;
+  border: thin solid #707fc0;
+}

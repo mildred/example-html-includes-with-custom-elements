@@ -1,0 +1,81 @@
+<!doctype html>
+<head>
+</head>
+<body>
+  <link rel="stylesheet" type="text/css" href="layout-book.css"/>
+
+  <article class="livre" style="display: flex; flex-direction: column; justify-content: space-evenly;">
+    <div class="title"><slot name="title"></slot></div>
+    <div style="display: flex; gap: 1rem; justify-content: space-evenly;">
+      <div class="cover"><slot name="cover"></slot></div>
+      <div style="display: flex; flex-direction: column; justify-content: space-evenly;">
+        <table class="info">
+          <tr>
+            <td>Prix&nbsp;:</td>
+            <td><slot name="price"></slot></td>
+          </tr>
+          <tr>
+            <td colspan=2>
+              <div style="display: flex;">
+                <button style="flex: 0 0 2em" name="del-basket">-</button>
+                <input  style="flex: 0 0 3em; width: 3em; text-align: center;" name="quantity" readonly type=text value=0 />
+                <button style="flex: 0 0 2em" name="add-basket">+</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="total-price" colspan=2 style="display: none"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="data"><slot name="data"></slot></div>
+    <script>
+      (() => {
+        const articleElement = currentScript.parentElement;
+        const addBasket = articleElement.querySelector('button[name=add-basket]')
+        const delBasket = articleElement.querySelector('button[name=del-basket]')
+        const quantity = articleElement.querySelector('input[name=quantity]')
+        const totalPrice = articleElement.querySelector('.total-price')
+        const dataSlot = articleElement.querySelector('slot[name=data]')
+
+        dataSlot.addEventListener('slotchange', (e) => readData())
+        let data;
+        data = readData()
+
+        addBasket.addEventListener('click', e => {
+          quantity.value++
+          dispatch()
+        })
+
+        delBasket.addEventListener('click', e => {
+          quantity.value = Math.max(0, quantity.value - 1)
+          dispatch()
+        })
+
+        function readData() {
+          data = {
+            ...dataSlot.assignedNodes()[0]?.dataset,
+            quantity: quantity.value
+          }
+          for(let k of ['price', 'weight', 'quantity']) {
+            data[k] = parseInt(data[k])
+          }
+          return data;
+        }
+
+        function dispatch() {
+          let data = readData()
+          totalPrice.textContent = (data.price * parseInt(quantity.value)) + '€'
+          articleElement.dispatchEvent(new CustomEvent('basket', {
+            bubbles: true,
+            composed: true,
+            detail: data
+          }));
+        }
+      })()
+    </script>
+  </article>
+
+</body>
+

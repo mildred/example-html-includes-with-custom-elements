@@ -1,0 +1,29 @@
+:host {
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.livre {
+  display: flow-root;
+  margin: 1rem;
+  padding: 1rem;
+  border: thin solid #707fc0;
+  width: calc(var(--site-width) / 2 - 6rem);
+  height: calc(var(--site-width) / 2 - 6rem);;
+}
+
+.cover {
+  width: 50%;
+}
+
+.cover ::slotted(img) {
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+}
+.title > ::slotted(*) {
+  margin: 0;
+}

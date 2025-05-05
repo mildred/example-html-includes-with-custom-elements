@@ -1,0 +1,286 @@
+article.related > header > h1 { font-size: 1.8rem; }
+
+/*
+ * Body
+ */
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+header a, footer a, header a:visited, footer a:visited {
+  color: inherit;
+}
+
+header a, header a:visited {
+  text-decoration: none;
+}
+
+footer a {
+  text-decoration: underline;
+}
+
+/*
+ * header
+ */
+
+header {
+  width: 100%
+}
+
+header .title {
+  background-color: #fff;
+  height: 283px;
+  text-align: center;
+  margin: 0;
+  display: block;
+  background: no-repeat center url(graphics/CartonVide2.jpg);
+  background: no-repeat center url(graphics/SiteMelBaniere2.jpg);
+  overflow: hidden; /* prevent margin collapsing */
+}
+
+header .title h1 {
+  margin: 0;
+  color: #707fc0;
+  font-family: "Great Vibes";
+  font-weight: normal;
+  font-style: normal;
+}
+
+header .title h2 {
+  margin: 0;
+  color: #846d43;
+  font-family: "Monotype Corsiva";
+  font-weight: normal;
+  font-style: normal;
+}
+
+header .title .author {
+  color: #707fc0;
+  font-family: "Monotype Corsiva";
+  font-size: 24px;
+  margin: 0.5rem;
+}
+
+header .title .home-link {
+  color: #707fc0;
+  font-family: "Monotype Corsiva";
+  font-size: 24px;
+  margin: 0.5rem;
+  text-decoration: underline;
+}
+
+/* --banner-width */
+@media (width >= 1000px) {
+  header .title {
+    width: var(--banner-width);
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  header .title h1 {
+    font-size: 65px;
+    position: absolute;
+    left: 260px;
+    top: 90px;
+  }
+
+  header .title h2 {
+    font-size: 30px;
+    position: absolute;
+    right: 350px;
+    top: 190px;
+  }
+
+  header .title .home-link {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  header .title .author {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+@media (width < 1000px) {
+  header .title {
+    background-position: left;
+    position: relative;
+  }
+
+  header .title h1 {
+    font-size: 10vw;
+  }
+
+  header .title h2 {
+    font-size: 5vw;
+  }
+
+  header .title .home-link {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  header .title .author {
+    text-align: left;
+  }
+}
+
+header > nav {
+  --base-bgcolor: #c6e3dd;
+  --active-bgcolor: #c5d5f9;
+  --hover-bgcolor: #707fc0;
+  --base-color: #707fc0;
+  --active-color: #846d43;
+  --hover-color: #e5faf3;
+  background-color: var(--base-bgcolor);
+  max-width: var(--banner-width);
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Monotype Corsiva";
+}
+
+@media (width >= 50rem) {
+  header > nav {
+    font-size: 24px;
+  }
+}
+
+@media (width < 50rem) {
+  header > nav {
+    font-size: 20px;
+  }
+}
+
+header > nav ul {
+  /*max-width: calc(var(--site-width) + 1rem);*/
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0 auto;
+  padding: 0;
+}
+
+header > nav ul > li {
+  list-style-type: none;
+  margin: 0;
+  text-align: center;
+}
+
+header > nav ul > li > a {
+  display: block;
+  padding: 0 1rem;
+}
+
+header > nav ul.main > li {
+  flex: 1 1 auto;
+}
+
+header > nav ul.main > li:not(.current):not(:hover) {
+  color: var(--base-color);
+}
+
+header > nav ul.main > li:not(:hover).current {
+  background-color: var(--active-bgcolor);
+  color: var(--active-color);
+}
+
+header > nav ul > li:hover {
+  background-color: var(--hover-bgcolor);
+  color: var(--hover-color);
+}
+
+header > nav ul.main > li > a {
+  padding: 1rem;
+}
+
+header > nav ul.child {
+  background-color: var(--active-bgcolor);
+  color: var(--active-color);
+}
+
+header > nav ul > li.active {
+  text-decoration: underline;
+}
+
+header > nav ul.child > li:not(.active) > a {
+  padding: 0 1rem;
+}
+
+/*
+ * nav.i18n
+ */
+
+nav.i18n {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+nav.i18n ul {
+  display: flex;
+  flex-flow: column wrap;
+  margin: 0;
+  padding: 0;
+  background-color: #c6e3dd;
+  border-bottom-left-radius: 0.5em;
+}
+
+nav.i18n li {
+  flex: 1 1 auto;
+  list-style-type: none;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+nav.i18n img {
+  height: 1em;
+}
+
+
+/*
+ * main
+ */
+
+main {
+  background-color: #fff;
+  width: min(calc(100%), var(--banner-width));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main > div {
+  width: min(calc(100% - 1rem), var(--site-width));
+  padding: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main p {
+  text-align: justify;
+}
+
+/*
+ * footer
+ */
+
+footer {
+  width: 100%;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  font-size: var(--font-size-small);
+  color: #888;
+}
+
+footer > * {
+  width: min(calc(100% - 1rem), var(--site-width));
+  padding: 0 0.5rem;
+  margin-left: auto;
+  margin-right: auto
+}
+

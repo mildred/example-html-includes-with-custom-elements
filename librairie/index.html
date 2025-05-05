@@ -1,0 +1,116 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8" />
+    <script src="../polyfill.js"></script>
+    <script src="https://js.stripe.com/v3"></script>
+</head>
+
+<load-file layout src="../layout.html">
+  <div>
+    <div>
+      <center>
+        <button name=pay>
+          Pay <span class="price">0</span>¤ (<span class="quantity">0</span> articles, <span class="weight">0</span>g)
+        </button>
+      </center>
+    </div>
+    <script>
+      (()=>{
+        const parentElement = document.currentScript.parentElement
+        const quantityElement = parentElement.querySelector('.quantity')
+        const weightElement = parentElement.querySelector('.weight')
+        const priceElement = parentElement.querySelector('.price')
+        let basket = {}
+
+        const shipping_prices = [
+          { max_weight: 20,   price:  1.69, stripe_price_id: 'price_1R6zusKD38N8' },
+          { max_weight: 100,  price:  3.08, stripe_price_id: 'price_1R6zucqyEdsu' },
+          { max_weight: 250,  price:  5.02, stripe_price_id: 'price_1R6zvTc1FC8k' },
+          { max_weight: 500,  price:  7.00, stripe_price_id: 'price_1R6zwjU4Z7CB' },
+          { max_weight: 1000, price:  8.70, stripe_price_id: 'price_1R6zw2bZJsKJ' },
+          { max_weight: 2000, price: 10.55, stripe_price_id: 'price_1R6zxm9vhdJw' },
+        ]
+
+        parentElement.addEventListener('basket', e => {
+          basket[e.detail.productId] = e.detail
+          recomputeBasket()
+        })
+
+        function recomputeBasket() {
+          console.log("basket:", basket)
+          let weight = 0, price = 0, quantity = 0
+          for (let product of Object.values(basket)) {
+            weight += product.weight * product.quantity
+            price  += product.price  * product.quantity
+            quantity += product.quantity
+          }
+          price += findShipping(weight).price
+          quantityElement.textContent = quantity
+          weightElement.textContent = weight
+          priceElement.textContent = Math.round(price * 100) / 100
+        }
+
+        function findShipping(weight){
+          for (let shipping of shipping_prices) {
+            if (shipping.max_weight < weight) continue
+            return shipping
+          }
+        }
+
+        let stripe = Stripe('pk_live_51QS5IHHfskdJnaiy493N2');
+        const checkoutButton = parentElement.querySelector('button[name=pay]')
+
+        checkoutButton.addEventListener('click', () => {
+          /*
+          * When the customer clicks on the button, redirect
+          * them to Checkout.
+          */
+          let lineItems = [], weight = 0
+          for (let product of Object.values(basket)) {
+            weight += product.weight * product.quantity
+            lineItems.push({
+              price: product.stripePriceId,
+              quantity: product.quantity
+            })
+          }
+
+          lineItems.push({
+            price: findShipping(weight).stripe_price_id,
+            quantity: 1
+          })
+
+          console.log(lineItems)
+
+          stripe.redirectToCheckout({
+            lineItems,
+            mode: 'payment',
+            submitType: 'pay',
+            shippingAddressCollection: {
+              allowedCountries: ['FR']
+            },
+            /*
+            * Do not rely on the redirect to the successUrl for fulfilling
+            * purchases, customers may not always reach the success_url after
+            * a successful payment.
+            * Instead use one of the strategies described in
+            * https://docs.stripe.com/payments/checkout/fulfill-orders
+            */
+            successUrl: window.location.href, // protocol + '//melanie-de-la-salette.fr/#stripe-success',
+            cancelUrl: window.location.href,
+          }).then(function (result) {
+            console.log("Checkout result:", result)
+            if (result.error) {
+              alert(result.error.message)
+            }
+          });
+        });
+
+      })()
+    </script>
+    <div style="display: flex; align-items: stretch; justify-content: space-evenly; flex-flow: row wrap;">
+      <load-file src="item1/index.html"></load-file>
+      <load-file src="item2/index.html"></load-file>
+      <load-file src="item3/index.html"></load-file>
+    </div>
+  </div>
+</load-file>
